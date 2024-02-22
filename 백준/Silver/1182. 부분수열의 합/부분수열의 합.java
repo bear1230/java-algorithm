@@ -1,46 +1,43 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Inet4Address;
 import java.util.StringTokenizer;
 
-public class Main {
-    static int N, S;
-    static int[] arr;
-    static int answer;
+public class Main{
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+	static int m;
+	static int check;
 
-        st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        S = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) throws IOException {
 
-        arr = new int[N];
-        st = new StringTokenizer(br.readLine());
-        for(int i=0; i<N; i++){
-            arr[i] = Integer.parseInt(st.nextToken());
-        }
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
 
-        for(int i=1; i<=N; i++){
-            recur(0,0,0,i);
-        }
+		int arr[] = new int[n];
+		m = Integer.parseInt(st.nextToken());
+		st = new StringTokenizer(br.readLine());
+        
+		for (int i = 0; i < n; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
 
-        System.out.println(answer);
-    }
+		dfs(0, 0, arr);
+        
+		if (m == 0) {
+			check = check - 1;
+		}
+		System.out.println(check);
 
-    private static void recur(int s, int cur, int sum, int cnt) {
+	}
 
-        if (cur == cnt) {
-            if (sum == S) {
-                answer++;
-            }
-            return;
-        }
+	public static void dfs(int n, int sum, int[] arr) {
+		if (sum == m) {
+			check++;
+		}
+		for (int i = n; i < arr.length; i++) {
+			dfs(i + 1, sum + arr[i], arr);
+		}
+	}
 
-        for (int i = s; i < N; i++) {
-            recur(i + 1, cur + 1, sum+arr[i], cnt);
-        }
-    }
 }
