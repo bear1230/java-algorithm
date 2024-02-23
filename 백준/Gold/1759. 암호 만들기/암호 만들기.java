@@ -1,39 +1,35 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-/**
- * 최소 한 개의 모음(a, e, i, o, u)과 최소 두 개의 자음
- * 암호에서 증가하는 순서로
- */
 public class Main {
-    static StringBuilder sb = new StringBuilder();
-    static int L, C;
+    static int L, S;
+    static char[] arr;
     static char[] ans;
-    static char[] ch;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         L = Integer.parseInt(st.nextToken());
-        C = Integer.parseInt(st.nextToken());
-        ch = new char[C];
+        S = Integer.parseInt(st.nextToken());
+
+        arr = new char[S];
         ans = new char[L];
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < C; i++) {
-            ch[i] = st.nextToken().charAt(0);
+        for (int i = 0; i < S; i++) {
+            arr[i] = st.nextToken().charAt(0);
         }
-        Arrays.sort(ch);
+        Arrays.sort(arr);
+
         recur(0, 0);
         System.out.println(sb);
-
     }
 
-    private static void recur(int start, int cur) {
-        if (cur == L) {
+    private static void recur(int cur, int count) {
+        if (count == L) {
             if (check(ans)) {
                 for (char c : ans) {
                     sb.append(c);
@@ -42,15 +38,20 @@ public class Main {
             }
             return;
         }
-        for (int i = start; i < C; i++) {
-            ans[cur] = ch[i];
-            recur(i + 1, cur + 1);
+        
+        if(cur ==S){
+            return;
         }
+
+        ans[count] = arr[cur];
+        recur(cur + 1, count + 1);
+        recur(cur + 1, count);
     }
 
     private static boolean check(char[] ans) {
-        int c = 0;// 자음
-        int v = 0;//모음
+        int c = 0;
+        int v = 0;
+        
         for (int i = 0; i < ans.length; i++) {
             if (ans[i] == 'a' || ans[i] == 'e' || ans[i] == 'i' || ans[i] == 'o' || ans[i] == 'u') {
                 c++;
@@ -58,6 +59,7 @@ public class Main {
                 v++;
             }
         }
+
         if (c >= 1 && v >= 2) {
             return true;
         }
