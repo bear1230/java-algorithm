@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
     static int N, M;
@@ -15,26 +12,25 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        Map<String, Boolean> map = new HashMap<>();
+        HashSet<String> set = new HashSet<>();
 
         for (int i = 0; i < N; i++) {
-            map.put(br.readLine(), true);
+            set.add(br.readLine());
         }
 
         int count = N;
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine(), ",");
-            
+
             while (st.hasMoreTokens()) {
                 String token = st.nextToken();
-                
-                if (map.containsKey(token)) {
-                    map.remove(token);
-                    count--;
+
+                if (set.contains(token)) {
+                    set.remove(token);
                 }
             }
-            System.out.println(count);
+            System.out.println(set.size());
 
         }
 
