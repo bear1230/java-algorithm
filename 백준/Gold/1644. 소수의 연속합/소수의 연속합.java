@@ -10,6 +10,8 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
         ArrayList<Integer> list = new ArrayList<>();
         boolean[] isPrime = new boolean[N + 1];
+        
+        isPrime[0] = isPrime[1] = false;
         Arrays.fill(isPrime, true);
 
         for (int i = 2; i * i <= N; i++) {
