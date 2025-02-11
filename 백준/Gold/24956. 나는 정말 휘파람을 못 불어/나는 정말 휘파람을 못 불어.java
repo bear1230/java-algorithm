@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,7 +31,8 @@ public class Main {
                 arr[2] %= MOD;
 
             }
-            sum %=MOD;
+            sum %= MOD;
+            
         }
         System.out.println(sum);
 
