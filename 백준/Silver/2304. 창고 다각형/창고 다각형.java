@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,6 +13,7 @@ import java.util.StringTokenizer;
  *    누적합
  *    1. 왼쪽 누적합 , 오른쪽 누적합 계산
 * */
+
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
