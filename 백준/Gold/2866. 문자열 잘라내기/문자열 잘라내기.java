@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int R = Integer.parseInt(st.nextToken());
@@ -25,12 +26,12 @@ public class Main {
             }
         }
 
-        //System.out.println(Arrays.toString(arr));
+
         for (int i=1; i<R; i++ ){
             TreeSet<String> set = new TreeSet<>();
             for(int j=0; j<C; j++){
                 String str = arr[j].substring(i);
-                //System.out.println(str);
+  
                 if(set.contains(str)){
                     System.out.println(i-1);
                     return;
@@ -39,8 +40,8 @@ public class Main {
                 }
             }
         }
+        
         System.out.println(R-1);
-
 
     }
 }
