@@ -8,11 +8,13 @@ public class Main {
     static int L, S;
     static char[] arr;
     static char[] ans;
+    
     static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        
         L = Integer.parseInt(st.nextToken());
         S = Integer.parseInt(st.nextToken());
 
