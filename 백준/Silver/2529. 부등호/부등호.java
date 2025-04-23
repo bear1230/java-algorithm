@@ -7,48 +7,77 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 
 /**
- * 완탐 -> 0부터 9까지 다 돌리기
+ * 0부터 9까지의 정수 -> 숫자는 중복 x,  선택된 숫자는 모두 달라야 한다
  */
 public class Main {
+    static ArrayList<String> list = new ArrayList<>();
     static int N;
-    static char[] arr;
-    static boolean[] visited = new boolean[10]; // 0~9
-    static ArrayList ansswer = new ArrayList<>();
+    static char[] sign;
+    static boolean[] visited;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
+
+        visited = new boolean[10];
+        sign = new char[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
-        arr = new char[N];
         for (int i = 0; i < N; i++) {
-            arr[i] = st.nextToken().charAt(0);
+            sign[i] = st.nextToken().charAt(0);
         }
-        recur("", 0);
-        Collections.sort(ansswer);
-        System.out.println(ansswer.get(ansswer.size()-1));
-        System.out.println(ansswer.get(0));
+        arr = new int[N + 1];
+
+        recur(0);
+
+        Collections.sort(list);
+
+        System.out.println(list.get(list.size() - 1));
+        System.out.println(list.get(0));
+
     }
 
-    private static void recur(String s, int depth) {
-        if (depth == N + 1) {
-            ansswer.add(s);
+    private static boolean check(int cur) {
+
+        if (cur <= 1) return true;
+
+        if (sign[cur - 2] == '<' && arr[cur - 2] > arr[cur - 1]) {
+            return false;
+        } else if (sign[cur - 2] == '>' && arr[cur - 2] < arr[cur - 1]) {
+            return false;
+
+        }
+
+
+        return true;
+    }
+
+    private static void recur(int cur) {
+
+        if (!check(cur)) {
             return;
         }
-        for (int i = 0; i < 10; i++) {
-            if (depth == 0 || !visited[i] && check(s.charAt(s.length() - 1) - '0', i, arr[depth - 1])) {
-                visited[i] = true;
-                recur(s + i, depth + 1);
-                visited[i] = false;
-            }
-        }
-    }
 
-    private static boolean check(int a, int b, char c) {
-        if (c == '<') {
-            return a < b;
-        } else {
-            return a > b;
+        if (cur == N + 1) {
+            String tmp = "";
+            for (int a : arr) {
+                tmp += a;
+            }
+            list.add(tmp);
+
+            return;
+        }
+
+        for (int i = 0; i < 10; i++) {
+            if (visited[i]) {
+                continue;
+            }
+
+            visited[i] = true;
+            arr[cur] = i;
+            recur(cur + 1);
+            visited[i] = false;
+
         }
     }
 }
