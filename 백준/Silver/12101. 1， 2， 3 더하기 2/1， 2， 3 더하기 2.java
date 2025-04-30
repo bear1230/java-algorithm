@@ -4,51 +4,48 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 /**
- * 정수 n과 k가 주어졌을 때, n을 1, 2, 3의 합으로 나타내는 방법 중에서 k번째로 오는 식
- * 완전탐색 -> 1 2 3 더하는 모든 경우의수 구해보기
- * *
- * 탐색할 수 있는 숫자 정의 후
- * K번째를 찾게되면 종료
- */
+ *
+ * N을 1 2 3의 합으로 나타내는 방법 중 K번째로 오는 식
+ * */
 
 public class Main {
     static int N, K;
-    static StringBuilder sb = new StringBuilder();
     static int[] arr;
-    static int count;
+    static int answer;
+    static int count = 0;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
-        arr = new int[N];
-        recur(0, 0);
-        if (K > count) {
-            System.out.println(-1);
-        } else {
-            System.out.println(sb);
-        }
 
+        arr = new int[N];
+
+        recur(0, 0);
+        if(K>count){
+            System.out.println(-1);
+        }
+        System.out.println(sb);
     }
 
-    private static void recur(int sum, int depth) {
-        if (sum > N) {
-            return;
-        }
+    private static void recur(int cur, int sum) {
+        if (sum > N) return;
         if (sum == N) {
             count++;
             if (count == K) {
-                for (int i = 0; i < depth - 1; i++) {
+                for (int i = 0; i < cur-1; i++) {
                     sb.append(arr[i]).append("+");
                 }
-                sb.append(arr[depth - 1]);
+                sb.append(arr[cur-1]);
             }
             return;
         }
+
         for (int i = 1; i <= 3; i++) {
-            arr[depth] = i;
-            recur(sum + i, depth + 1);
+            arr[cur] = i;
+            recur(cur + 1, sum + i);
         }
     }
 }
