@@ -4,56 +4,49 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int a, b;
-    static int len;
-    static char[] arr;
+    static int A, B;
+    static char[] chNum;
     static boolean[] visited;
-    static int max = Integer.MIN_VALUE;
+    static int answer = Integer.MIN_VALUE;
+    static int len;
 
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        A = Integer.parseInt(st.nextToken());
+        B = Integer.parseInt(st.nextToken());
 
-        a = Integer.parseInt(st.nextToken());
-        b = Integer.parseInt(st.nextToken());
-
-        // a의 자리 수 => string 변환
-        String str = Integer.toString(a);
-        len = str.length();
-
-        arr = new char[len];
+        String str = Integer.toString(A);
+        chNum = str.toCharArray();
+        len = chNum.length;
         visited = new boolean[len];
 
-        char[] chArr = str.toCharArray();
-
-        for(int i = 0; i < len; i++) {
-            arr[i] = chArr[i];
+        recur(0,"");
+        if(answer == Integer.MIN_VALUE){
+            System.out.println(-1);
+        } else {
+            System.out.println(answer);
         }
-
-        recur(0, "");
-
-        if(max == Integer.MIN_VALUE) max = -1;
-        System.out.println(max);
     }
 
-    static void recur(int depth, String num) {
-
-        if(depth == len) {
-            int sum = Integer.parseInt(num);
-            if(sum < b) {
-                max = Math.max(max, sum);
+    private static void recur(int cur, String s) {
+        if (cur == len) {
+            int maxS = Integer.parseInt(s);
+            if(maxS < B){
+                answer = Math.max(maxS,answer);
             }
             return;
         }
 
-        for(int i = 0; i < len; i++) {
-            if(!visited[i]) {
-                if(num.equals("") && arr[i] == '0') continue;
-                visited[i] = true;
-                recur(depth+1, num + arr[i]);
-                visited[i] = false;
+        for (int i = 0; i < len; i++) {
+            if(visited[i]) continue;
+            if(s.equals("") && chNum[i] == '0'){
+                continue;
             }
+            visited[i] = true;
+            recur(cur +1,s + chNum[i]);
+            visited[i] = false;
+
         }
     }
 }
