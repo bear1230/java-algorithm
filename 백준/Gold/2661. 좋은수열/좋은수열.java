@@ -1,42 +1,58 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+/**
+ * 숫자 1, 2, 3으로만 이루어지는 수열
+ * 임의의 길이의 인접한 두 개의 부분 수열이 동일한 것이 있으면, 나쁜수열
+ * 그렇지 않은 수열은 좋은 수열
+ * <p>
+ * 길이가 N인 좋은 수열 중 가장 작은 수
+ */
 public class Main {
-	static int N;
-	static String res="";
-	static boolean isTrue;
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		N = sc.nextInt();
-		
-		dfs("1",1); //1번째 위치에 1 넣기
-		
-		//System.out.println(result);
-	}
+    static boolean[] visited;
+    static int N;
+    static int[] arr;
+    static StringBuilder sb = new StringBuilder();
+    static int min = Integer.MAX_VALUE;
 
-	static void dfs(String res,int cnt) {//좋은 순열 인 것들만 넘어옴
-		if(isTrue) return;
-		if(cnt == N) {
-			System.out.println(res);
-			isTrue = true;
-			return;
-		}
-		
-		for(int i=1;i<=3;i++) {
-			if(isPossible(res+i)) dfs(res+i,cnt+1);
-		}
-	}
-	
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        arr = new int[N];
+        recur(0, "");
 
-	static boolean isPossible(String res) {
-		//전체 길이의 반틈만 비교
-		int div = res.length() /2;
-		int beginIndex = res.length() -1; //전체index 바로 앞에꺼
-		int endIndex = res.length(); //마지막 index
-		for(int i=1;i<=div;i++) { //1부터 div길이까지 비교해주기
-			if(res.substring(beginIndex-i, endIndex-i).equals(res.substring(beginIndex, endIndex))) return false;
-			beginIndex -=1;
-		}
-		return true;
-	}
+        System.out.println(min);
+
+    }
+
+    private static void recur(int cur, String s) {
+        if (!isGood(cur, s)) {
+            return;
+        }
+
+        if (cur == N) {
+            System.out.println(s);
+            System.exit(0);
+        }
+
+        for (int i = 1; i <= 3; i++) {
+            arr[cur] = i;
+            recur(cur + 1, s + i);
+
+        }
+
+    }
+
+    private static boolean isGood(int cur, String s) {
+        int len = s.length();
+        for (int i = 1; i <= len/2; i++) {
+            String a = s.substring(len - i);
+            String b = s.substring(len - 2*i, len-i);
+            if(a.equals(b)){
+                return false;
+            }
+        }
+        return true;
+    }
 }
