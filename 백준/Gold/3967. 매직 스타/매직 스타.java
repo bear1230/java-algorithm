@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -72,7 +71,6 @@ public class Main {
             }
 
             visited[i] = true;
-            arr[cur] = i; //어떤 알파벳 선택했는지 저장
             alphabet[position[cur]] = i; // 매직보드의 인덱스에 어떤 알파벳이 들어갈지 체크
             recur(cur + 1);
             visited[i] = false;
