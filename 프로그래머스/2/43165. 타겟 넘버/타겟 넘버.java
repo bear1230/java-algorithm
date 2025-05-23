@@ -1,26 +1,21 @@
-/*
-DFS - 타겟 넘버
-
-*/
-
 class Solution {
-    static int answer = 0;
+    static int count =0;
 
     public int solution(int[] numbers, int target) {
-
-        dfs(0, 0, numbers, target);
         
-        return answer;
+        recur(0, 0, numbers, target);
+        return count;
     }
     
-    static void dfs(int num, int idx, int[] numbers, int target){
-        if(num == numbers.length){
-            if(idx == target)
-                answer++;
-        } else {
-            dfs(num + 1, idx + numbers[num], numbers, target);
-            dfs(num + 1, idx - numbers[num], numbers, target);
-                
+    private static void recur(int cur, int sum, int[] numbers, int target) {
+        if (cur == numbers.length) {
+            if (sum == target) {
+                count++;
+            }
+            return;
         }
+
+        recur(cur + 1, sum + numbers[cur], numbers, target);
+        recur(cur + 1, sum - numbers[cur], numbers, target);
     }
 }
